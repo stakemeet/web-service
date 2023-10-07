@@ -5,10 +5,13 @@ import { type ToDo } from '../lib/todos'
 
 import styles from '../styles/Home.module.css'
 import TextField from '@mui/material/TextField'
-import { Button, Container, Grid, List, ListItem, ListItemText } from '@mui/material'
+import { Button, Container, Grid, List, ListItem, ListItemText, Paper } from '@mui/material'
 import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers'
 import dayjs from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+import { Profile } from '../lib/profile'
+import { Meeting } from '../lib/CreateMeeting'
 
 interface ToDoComponentProps {
   key: number
@@ -108,70 +111,52 @@ export default function Home() {
   const undone = toDos.filter((todo) => !todo.done)
 
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>postgres.js + next.js</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <header className={styles.header}>
-        <h2>
-          <a href="https://github.com/porsager/postgres">postgres.js</a> +{' '}
-          <a href="https://nextjs.org">next.js</a> to dos
-        </h2>
-      </header>
-      <main className={styles.main}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <Container maxWidth="lg">
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                {/* Left Side */}
-                <TextField label="Enter Email" fullWidth />
-                <List>
-                  {/* Use JavaScript to map and render the list of emails here */}
-                  {/* Each ListItem should have a Remove button */}
-                  <ListItem>
-                    <ListItemText primary="example@example.com" />
-                    <Button variant="outlined">Remove</Button>
-                  </ListItem>
-                  {/* Add more ListItems as needed */}
-                </List>
-                <TextField label="Set Number" fullWidth />
-                <Button variant="contained" color="primary">
-                  Send Invites
-                </Button>
-              </Grid>
-              <Grid item xs={6}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DateCalendar defaultValue={dayjs('2022-04-17')} />
-                </LocalizationProvider>
-              </Grid>
-            </Grid>
-          </Container> 
-        </div>
-      </main>
+      <div className={styles.container}>
+        <Head>
+          <title>StakeMeet</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <header className={styles.header}>
+          <h2>
+            StakeMeet
+          </h2>
+        </header>
+        <main className={styles.main}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Container maxWidth="lg">
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+          <Paper >
+            <TextField id="user-email" label="Email" variant="outlined" />
+            <TextField id="user-secret" label="Password" variant="outlined" />
 
-      <footer className={styles.footer}>
-        <a
-          href="https://github.com/vercel/next.js/tree/canary/examples/with-postgres"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          powered by postgres.js & next.js
-        </a>
-      </footer>
-    </div>
+            <Button variant="contained">Login</Button>
+            <Button variant="contained">Register</Button>
+          
+          {Profile()}
+          {Meeting()}
+
+          </Paper>
+                </Grid>
+                <Grid item xs={6}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar defaultValue={dayjs('2022-04-17')} />
+                  </LocalizationProvider>
+                </Grid>
+              </Grid>
+            </Container> 
+          </div>
+        </main>
+        
+        <footer className={styles.footer}>
+
+        </footer>
+      </div>
   )
 }
 
 /*
-        <Paper >
-          <TextField id="user-email" label="Email" variant="outlined" />
-          <TextField id="user-secret" label="Password" variant="outlined" />
 
-          <Button variant="contained">Login</Button>
-          <Button variant="contained">Register</Button>
-          <Button variant="contained">Connect wallet</Button>
-        </Paper>
 
 
         <Paper >
