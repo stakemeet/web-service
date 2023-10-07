@@ -8,9 +8,16 @@
     "migrate:down": "ley down"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/icons-material": "^5.14.12",
+    "@mui/material": "^5.14.12",
+    "@mui/x-date-pickers": "^6.16.1",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "dayjs": "^1.11.10",
     "next": "latest",
     "postgres": "^3.3.1",
     "react": "^18.2.0",

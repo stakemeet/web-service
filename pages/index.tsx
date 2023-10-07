@@ -4,6 +4,11 @@ import Head from 'next/head'
 import { type ToDo } from '../lib/todos'
 
 import styles from '../styles/Home.module.css'
+import TextField from '@mui/material/TextField'
+import { Button, Container, Grid, List, ListItem, ListItemText } from '@mui/material'
+import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers'
+import dayjs from 'dayjs'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 interface ToDoComponentProps {
   key: number
@@ -115,6 +120,70 @@ export default function Home() {
         </h2>
       </header>
       <main className={styles.main}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                {/* Left Side */}
+                <TextField label="Enter Email" fullWidth />
+                <List>
+                  {/* Use JavaScript to map and render the list of emails here */}
+                  {/* Each ListItem should have a Remove button */}
+                  <ListItem>
+                    <ListItemText primary="example@example.com" />
+                    <Button variant="outlined">Remove</Button>
+                  </ListItem>
+                  {/* Add more ListItems as needed */}
+                </List>
+                <TextField label="Set Number" fullWidth />
+                <Button variant="contained" color="primary">
+                  Send Invites
+                </Button>
+              </Grid>
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateCalendar defaultValue={dayjs('2022-04-17')} />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </Container> 
+        </div>
+      </main>
+
+      <footer className={styles.footer}>
+        <a
+          href="https://github.com/vercel/next.js/tree/canary/examples/with-postgres"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          powered by postgres.js & next.js
+        </a>
+      </footer>
+    </div>
+  )
+}
+
+/*
+        <Paper >
+          <TextField id="user-email" label="Email" variant="outlined" />
+          <TextField id="user-secret" label="Password" variant="outlined" />
+
+          <Button variant="contained">Login</Button>
+          <Button variant="contained">Register</Button>
+          <Button variant="contained">Connect wallet</Button>
+        </Paper>
+
+
+        <Paper >
+          <TextField id="recipients" label="Recipients" variant="outlined" />
+          <TextField id="field-value" label="Field value" variant="outlined" />
+          <TextField id="date" label="Date" variant="outlined" />
+
+          <Button variant="contained">Send</Button>
+        </Paper>
+*/
+
+/*
         <div className={styles.undone}>
           <div className={styles.firstRow}>
             <div className={styles.title}>to dos</div>
@@ -159,17 +228,4 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://github.com/vercel/next.js/tree/canary/examples/with-postgres"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          powered by postgres.js & next.js
-        </a>
-      </footer>
-    </div>
-  )
-}
+*/
