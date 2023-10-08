@@ -3,6 +3,7 @@ build:
 	npm install
 
 run:
+	npm install
 	npm run dev
 
 local-docker-dummy:

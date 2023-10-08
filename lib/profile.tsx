@@ -13,7 +13,6 @@ export function Profile() {
           key={connector.id}
           color='secondary'
           variant='outlined'
-          fullWidth
           onClick={() => connect({ connector })}
         >
           Connect with:

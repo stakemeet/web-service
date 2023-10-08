@@ -1,8 +1,6 @@
-import { UUID } from 'crypto'
 import sql from './db'
 
 export interface User{
-    user_id: number
     email: string
     secret: string
 }

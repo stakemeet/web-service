@@ -1,7 +1,8 @@
 import { Button } from '@mui/material'
 import axios from 'axios';
+import { createMeetContract } from './createMeetContract';
 
-export function Meeting(organizerEmail, date, hsFrom, hsTo) {
+export function Meeting(organizerEmail, date, hsFrom, hsTo, address, stake, attendeesEmail) {
 
     const createCalendarEvent = async () => {
         const url = `https://www.googleapis.com/calendar/v3/calendars/${process.env.GOOGLE_CALENDAR_ID ?? ""}/events`;
@@ -19,13 +20,7 @@ export function Meeting(organizerEmail, date, hsFrom, hsTo) {
           },
           attendees: [
             {
-                email: '', 
-            },
-            {
-                email: '', 
-            },
-            {
-                email: '', 
+                email: attendeesEmail[0], 
             },
           ],
           organizer: {
@@ -52,10 +47,9 @@ export function Meeting(organizerEmail, date, hsFrom, hsTo) {
     
     // TOIDO connect to dat4e picker
     const createEvent = async () => {
-        createCalendarEvent()
-            .then(() => {
-
-            }).catch(error => console.log("[ERROR] ", error))
+        createMeetContract(stake, attendeesEmail, address)
+            .then(() => createCalendarEvent())
+            .catch(error => console.log("[ERROR] ", error))
     };
  
   return (

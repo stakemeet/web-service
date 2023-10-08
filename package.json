@@ -22,6 +22,8 @@
     "@web3modal/standalone": "^2.4.3",
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
+    "ethers": "^6.7.1",
+    "fs": "^0.0.1-security",
     "next": "latest",
     "next-auth": "^4.23.2",
     "postgres": "^3.3.1",

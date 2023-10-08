@@ -4,7 +4,7 @@
 
 ### Set up a Postgres database
 
-Set up a Postgres database locally or use your favorite provider.
+Set up a Postgres database locally or use your favorite provider. You can do this by running `local-docker-dummy` And your url would be something like "postgresql://postgres:dudeThisIsInsecure!@localhost:5432"
 
 ### Configure environment variables
 
@@ -15,6 +15,12 @@ cp .env.local.example .env.local
 ```
 
 Set the `DATABASE_URL` variable in `.env.local` to the connection uri of your postgres database.
+
+Set the `PROJECT_ID` variable in `.env.local` to the walletconnect project ID
+
+Set the `GOOGLE_CALENDAR_ID` variable in `.env.local` to the calendar ID
+
+Set the `GOOGLE_OAUTH_TOKEN` variable in `.env.local` to the google api calendar token (oauth2 with admin access)
 
 ### Apply migrations
 
@@ -29,13 +35,5 @@ yarn migrate:up
 ### Start Next.js in development mode
 
 ```bash
-npm run dev
-# or
-yarn dev
+make run
 ```
-
-Your app should now be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).
-
-## Deploy on Vercel
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
