@@ -1,49 +1,64 @@
 import { Button } from '@mui/material'
+import axios from 'axios';
 
-export function Meeting() {
-  const createEvent = () => {
-        var event = {
-            'summary': 'Stakeapp summary description',
-            'location': 'labaticueva',
-            'description': 'A chance to hear more about Google\'s developer products.',
-            'start': {
-                'dateTime': '2023-10-07T09:00:00-07:00',
-                'timeZone': 'America/Los_Angeles',
-            },
-            'end': {
-                'dateTime': '2023-10-07T09:00:00-10:00',
-                'timeZone': 'America/Los_Angeles',
-            },
-            'recurrence': [
-                'RRULE:FREQ=DAILY;COUNT=2'
-            ],
-            'attendees': [
-                {'email': 'lpage@example.com'},
-                {'email': 'sbrin@example.com'},
-            ],
-            'reminders': {
-                'useDefault': false,
-                'overrides': [
-                {'method': 'email', 'minutes': 24 * 60},
-                {'method': 'popup', 'minutes': 10},
-                ],
-            },
-            };
+export function Meeting(organizerEmail, date, hsFrom, hsTo) {
 
-        calendar.events.insert({
-            auth: auth,
-            calendarId: 'primary',
-            resource: event,
-            }, function(err, event) {
-            if (err) {
-                console.log('There was an error contacting the Calendar service: ' + err);
-                return;
-            }
-            console.log('Event created: %s', event.htmlLink);
-            });
+    const createCalendarEvent = async () => {
+        const url = `https://www.googleapis.com/calendar/v3/calendars/${process.env.GOOGLE_CALENDAR_ID ?? ""}/events`;
+      
+        const eventData = {
+          end: {
+            date: date?.format("YYYY-DD-MM").toString,
+            dateTime: hsTo?.toString(), 
+            timezone: "America/Argentina/Buenos_Aires"
+          },
+          start: {
+            date: date?.format("YYYY-DD-MM").toString,
+            dateTime: hsFrom?.toString(),
+            timezone: "America/Argentina/Buenos_Aires"
+          },
+          attendees: [
+            {
+                email: '', 
+            },
+            {
+                email: '', 
+            },
+            {
+                email: '', 
+            },
+          ],
+          organizer: {
+            email: organizerEmail,
+          },
+          description: 'StakeMeet event', 
+        };
+
+        const token = process.env.GOOGLE_OAUTH_TOKEN ?? ""; 
+
+        try {
+          const response = await axios.post(url, eventData, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+                },
+          });
+          console.log('Event created successfully:', response.data);
+        } catch (error) {
+          console.error('Error creating event:', error);
+          throw error
+        }
     }
+    
+    // TOIDO connect to dat4e picker
+    const createEvent = async () => {
+        createCalendarEvent()
+            .then(() => {
+
+            }).catch(error => console.log("[ERROR] ", error))
+    };
  
   return (
-    <Button onClick={createEvent}>Create meeting</Button>
+    <Button onClick={createEvent} variant="contained" fullWidth>Create meeting</Button>
   )
 }

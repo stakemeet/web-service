@@ -5,13 +5,14 @@ import { type ToDo } from '../lib/todos'
 
 import styles from '../styles/Home.module.css'
 import TextField from '@mui/material/TextField'
-import { Button, Container, Grid, List, ListItem, ListItemText, Paper } from '@mui/material'
-import { DateCalendar, LocalizationProvider } from '@mui/x-date-pickers'
-import dayjs from 'dayjs'
+import { Button, Container, Grid, List, ListItem, ListItemText, Paper, Typography } from '@mui/material'
+import { DateCalendar, LocalizationProvider, TimePicker } from '@mui/x-date-pickers'
+import dayjs, { Dayjs } from 'dayjs'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import { Profile } from '../lib/profile'
 import { Meeting } from '../lib/CreateMeeting'
+import { useAccount } from 'wagmi'
 
 interface ToDoComponentProps {
   key: number
@@ -109,6 +110,20 @@ export default function Home() {
 
   const done = toDos.filter((todo) => todo.done)
   const undone = toDos.filter((todo) => !todo.done)
+  const [hsFrom, setHsFrom] = useState<Dayjs | null>(dayjs());
+  const [hsTo, setHsTo] = useState<Dayjs | null>(dayjs());
+  const [date, setDate] = useState<Dayjs | null>(dayjs());
+  const [stake, setStake] = useState();
+  const [organizerEmail, setOrganizerEmail] = useState();
+
+  const { address, isConnected } = useAccount()
+  
+  const [isClient, setIsClient] = useState(false)
+ 
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+ 
 
   return (
       <div className={styles.container}>
@@ -125,25 +140,48 @@ export default function Home() {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Container maxWidth="lg">
               <Grid container spacing={2}>
-                <Grid item xs={6}>
-          <Paper >
-            <TextField id="user-email" label="Email" variant="outlined" />
-            <TextField id="user-secret" label="Password" variant="outlined" />
-
-            <Button variant="contained">Login</Button>
-            <Button variant="contained">Register</Button>
-          
-          {Profile()}
-          {Meeting()}
-
-          </Paper>
+                <Grid item xs={4}>
+                  <Paper >
+                    <Typography>Login</Typography>
+                    <TextField id="user-email" label="Organizer email" variant="outlined" fullWidth onChange={(event: React.ChangeEvent<HTMLInputElement>) => setOrganizerEmail(event.target.value)} />
+                    {Profile()}
+                  </Paper>
                 </Grid>
-                <Grid item xs={6}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateCalendar defaultValue={dayjs('2022-04-17')} />
-                  </LocalizationProvider>
+                <Grid item xs={8}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={8}>
+                      <Paper >
+                        <Typography>Meeting details</Typography>
+                        <TextField id="attendees-1" label="Attendee email" variant="standard" fullWidth />
+                        <TextField id="attendees-2" label="Attendee email" variant="standard" fullWidth />
+                        <TextField id="attendees-3" label="Attendee email" variant="standard" fullWidth />
+                        <TextField id="stake" label="Amount to stake" variant="outlined" fullWidth onChange={(event: React.ChangeEvent<HTMLInputElement>) => setStake(event.target.value)} />
+                      </Paper>                    
+                    </Grid>
+                    <Grid item xs={4}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <TimePicker label="From" 
+                          value={hsFrom}
+                          onChange={(hsFrom) => setHsFrom(hsFrom)} />
+                        <TimePicker label="To" 
+                          value={hsFrom}
+                          onChange={(hsTo) => setHsTo(hsTo)} />
+                        <DateCalendar defaultValue={dayjs()} onChange={(date) => setDate(date)} />
+                      </LocalizationProvider>
+                    </Grid>
+                    {Meeting(organizerEmail, date, hsFrom, hsTo)}
+                  </Grid>
                 </Grid>
               </Grid>
+              <Paper>
+                <Typography>Details</Typography>
+                <Typography>Organizer Email: {organizerEmail ?? ""} </Typography>
+                <Typography>Organizer Wallet: {isClient ? address?.toString() : ""}</Typography>
+                <Typography>To stake: {stake ?? 0}</Typography>
+                <Typography>Meeting date: {date?.format("DD/MM/YYYY").toString() ?? ""}</Typography>
+                <Typography>From: {hsFrom?.format("HH:mm").toString() ?? ""}</Typography>
+                <Typography>To: {hsTo?.format("HH:mm").toString() ?? ""}</Typography>
+              </Paper>
             </Container> 
           </div>
         </main>

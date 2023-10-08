@@ -12,6 +12,8 @@ export function Profile() {
           disabled={!connector.ready}
           key={connector.id}
           color='secondary'
+          variant='outlined'
+          fullWidth
           onClick={() => connect({ connector })}
         >
           Connect with:
