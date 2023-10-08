@@ -20,7 +20,7 @@ Set the `PROJECT_ID` variable in `.env.local` to the walletconnect project ID
 
 Set the `GOOGLE_CALENDAR_ID` variable in `.env.local` to the calendar ID
 
-Set the `GOOGLE_OAUTH_TOKEN` variable in `.env.local` to the google api calendar token (oauth2 with admin access)
+Set the `GOOGLE_OAUTH_TOKEN` variable in `.env.local` to the google api calendar token (oauth2 with admin access) [Example on how to generate api url]([https://](https://blog.postman.com/how-to-access-google-apis-using-oauth-in-postman/))
 
 ### Apply migrations
 
