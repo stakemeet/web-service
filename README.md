@@ -37,3 +37,14 @@ yarn migrate:up
 ```bash
 make run
 ```
+
+## How to use
+
+1. Add an email for the organizer
+2. Connect with a wallet (i.e trust wallet)
+   1. Have in mind we are using ETH on Sepelia, so you would need to add it if it does not exist in your wallet
+3. Add the required information and set up the date + hs
+   1. You will see on the bottom of the screen the details
+4. Click on "create meeting" buttomm, the smart contract will be executed and if successful the meeting api call will be sent to google, creating the calendar event
+
+Note: This is a messy POC, we are not checking the input data, so it might be faulty, same with the smart contract and api calls
